@@ -44,7 +44,7 @@ Promise.race([
 
 
 
-$.ajax('https://randomuser.me/api/sdfdsfdsfs', {
+$.ajax('https://randomuser.me/api/', {
   method: 'GET',
   success: function(data) {
     console.log(data)
@@ -54,7 +54,7 @@ $.ajax('https://randomuser.me/api/sdfdsfdsfs', {
   }
 })
 
-fetch('https://randomuser.me/api/dsfdsfsd')
+fetch('https://randomuser.me/api/')
   .then(function (response) {
     // console.log(response)
     return response.json()
@@ -66,25 +66,13 @@ fetch('https://randomuser.me/api/dsfdsfsd')
     console.log('algo falló')
   });
 
-
-(async function load() {
-  // await
-  // action
-  // terror
-  // animation
-  async function getData(url) {
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data.data.movie_count > 0) {
-      // aquí se acaba
-      return data;
-    }
-    // si no hay pelis aquí continua
-    throw new Error('No se encontró ningun resultado');
-  }
-  const $form = document.getElementById('form');
-  const $home = document.getElementById('home');
-  const $featuringContainer = document.getElementById('featuring');
-
-
   
+(async function load(){
+  function getData(url){
+    const responsive=await fetch(url)
+    const data =await responsive.json()
+
+  }
+  getData("https://yts.lt/api/v2/list_movies.json?genre=action")
+  console.log(data);
+})()

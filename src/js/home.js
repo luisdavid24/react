@@ -68,11 +68,15 @@ fetch('https://randomuser.me/api/')
 
   
 (async function load(){
-  function getData(url){
+  async function getData(url){
     const responsive=await fetch(url)
     const data =await responsive.json()
+    return data;
 
   }
-  getData("https://yts.lt/api/v2/list_movies.json?genre=action")
-  console.log(data);
+  const actionList=await getData("https://yts.lt/api/v2/list_movies.json?genre=action")
+  const dramaList=await getData("https://yts.lt/api/v2/list_movies.json?genre=drama")
+  const animationList=await getData("https://yts.lt/api/v2/list_movies.json?genre=animation")
+  console.log(actionList,dramaList,animationList)
+  console.log("Action list",actionList);
 })()

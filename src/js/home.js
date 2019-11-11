@@ -84,6 +84,23 @@ fetch('https://randomuser.me/api/')
   const $dramaContainer=document.querySelector("#drama");
   const $animationContainer=document.querySelector("#animation");
   
+  function videoItemTemplate(movie) {
+    return (
+      `<div class="primaryPlaylistItem">
+        <div class="primaryPlaylistItem-image">
+          <img src="${movie.medium_cover_image}">
+        </div>
+        <h4 class="primaryPlaylistItem-title">
+          ${movie.title}
+        </h4>
+      </div>`
+    )
+  }
+
+  actionList.data.movies.forEach((movie)=>{
+    const HTMLString=videoItemTemplate(movie)
+    console.log(HTMLString)
+  })
   const $featuringContainer=document.querySelector("#animation");
   const $form=document.querySelector("#form");
   const $hemo=document.querySelector("#hemo");
@@ -95,4 +112,7 @@ fetch('https://randomuser.me/api/')
   const $modalTitle=$modal.querySelector("h1");
   const $modalImage=$modal.querySelector("img");
   const $modalDrescription=$modal.querySelector("p");
+
+
+
 })()

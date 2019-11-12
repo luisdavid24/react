@@ -101,12 +101,21 @@ fetch('https://randomuser.me/api/')
     html.body.innerHTML=HTMLString;
     return html.body.children[0]
   }
-  actionList.data.movies.forEach((movie)=>{
-    const HTMLString=videoItemTemplate(movie);
-    const movieElement=createTemplate(HTMLString);
-    $actionContainer.append(movieElement);
-    console.log(HTMLString);
-  })
+  function renderMovieList(list,$container){
+    // actionList.data.movies
+    $container.children[0].remove();
+    list.forEach((movie)=>{
+      const HTMLString=videoItemTemplate(movie);
+      const movieElement=createTemplate(HTMLString);
+      $container.append(movieElement);
+    })
+
+  }
+  
+  renderMovieList(actionList.data.movies,$actionContainer)
+  renderMovieList(dramaList.data.movies,$dramaContainer)
+  renderMovieList(animationList.data.movies,$animationContainer)
+  
   const $featuringContainer=document.querySelector("#animation");
   const $form=document.querySelector("#form");
   const $hemo=document.querySelector("#hemo");

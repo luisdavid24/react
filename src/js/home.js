@@ -75,8 +75,9 @@ fetch('https://randomuser.me/api/')
     
   }
   
+  const $home=document.getElementById("home");
   const $form=document.querySelector("#form");
-  const $home=document.getElementById("hemo");
+  
   $form.addEventListener("submit",(event)=>{
     event.preventDefault();
     $home.classList.add("search-active");

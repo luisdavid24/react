@@ -99,6 +99,9 @@ fetch('https://randomuser.me/api/')
 
   actionList.data.movies.forEach((movie)=>{
     const HTMLString=videoItemTemplate(movie)
+    const html=document.implementation.createDocument();
+    html.body.innerHTML=HTMLString;
+    $actionContainer.append(HTMLString)
     console.log(HTMLString)
   })
   const $featuringContainer=document.querySelector("#animation");

@@ -72,8 +72,13 @@ fetch('https://randomuser.me/api/')
     const responsive=await fetch(url)
     const data =await responsive.json()
     return data;
-
+    
   }
+  const $form=document.querySelector("#form");
+  $form.addEventListener("submit",(event)=>{
+    event.preventDefault();
+  })
+  
   const actionList=await getData("https://yts.lt/api/v2/list_movies.json?genre=action")
   const dramaList=await getData("https://yts.lt/api/v2/list_movies.json?genre=drama")
   const animationList=await getData("https://yts.lt/api/v2/list_movies.json?genre=animation")
@@ -124,7 +129,6 @@ fetch('https://randomuser.me/api/')
   renderMovieList(animationList.data.movies,$animationContainer)
   
   const $featuringContainer=document.querySelector("#animation");
-  const $form=document.querySelector("#form");
   const $hemo=document.querySelector("#hemo");
   
   const $modal=document.getElementById("modal");

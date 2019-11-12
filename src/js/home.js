@@ -81,8 +81,8 @@ fetch('https://randomuser.me/api/')
   console.log("Action list",actionList);
   // const $home=$(".home");
   const $actionContainer=document.querySelector("#action");
-  const $dramaContainer=document.querySelector("#drama");
-  const $animationContainer=document.querySelector("#animation");
+  const $dramaContainer=document.getElementById("drama");
+  const $animationContainer=document.getElementById("animation");
   
   function videoItemTemplate(movie) {
     return (
@@ -101,6 +101,12 @@ fetch('https://randomuser.me/api/')
     html.body.innerHTML=HTMLString;
     return html.body.children[0]
   }
+  function addEventClick($element){
+    $element.addEventListener("click",()=>{
+      alert("Click")
+    })
+    // $("div").on("click", function(){})
+  }
   function renderMovieList(list,$container){
     // actionList.data.movies
     $container.children[0].remove();
@@ -108,6 +114,7 @@ fetch('https://randomuser.me/api/')
       const HTMLString=videoItemTemplate(movie);
       const movieElement=createTemplate(HTMLString);
       $container.append(movieElement);
+      addEventClick(movieElement);
     })
 
   }

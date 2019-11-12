@@ -74,9 +74,14 @@ fetch('https://randomuser.me/api/')
     return data;
     
   }
+  
   const $form=document.querySelector("#form");
+  const $home=document.getElementById("hemo");
   $form.addEventListener("submit",(event)=>{
     event.preventDefault();
+    $home.classList.add("search-active");
+    const $loader=document.createElement("img");
+    debugger
   })
   
   const actionList=await getData("https://yts.lt/api/v2/list_movies.json?genre=action")
@@ -108,7 +113,7 @@ fetch('https://randomuser.me/api/')
   }
   function addEventClick($element){
     $element.addEventListener("click",()=>{
-      alert("Click")
+      showModal()
     })
     // $("div").on("click", function(){})
   }
@@ -129,7 +134,6 @@ fetch('https://randomuser.me/api/')
   renderMovieList(animationList.data.movies,$animationContainer)
   
   const $featuringContainer=document.querySelector("#animation");
-  const $hemo=document.querySelector("#hemo");
   
   const $modal=document.getElementById("modal");
   const $overlay=document.getElementById("overlay");
@@ -139,6 +143,14 @@ fetch('https://randomuser.me/api/')
   const $modalImage=$modal.querySelector("img");
   const $modalDrescription=$modal.querySelector("p");
 
-
+  function showModal(){
+    $overlay.classList.add("active");
+    $modal.style.animation="modalIn .8s forwards"
+  }
+  $hideModal.addEventListener("click",hideModal);
+  function hideModal(){
+    $overlay.classList.remove("active");
+    $modal.style.animation="modalout .8s forwards"
+  }
 
 })()

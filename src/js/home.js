@@ -84,7 +84,7 @@ fetch('https://randomuser.me/api/')
       $element.setAttribute(attribute, attributes[attribute]);
     }
   }
-  $form.addEventListener("submit",(event)=>{
+  $form.addEventListener("submit",async(event)=>{
     event.preventDefault();
     $home.classList.add("search-active");
     const $loader=document.createElement("img");
@@ -93,7 +93,11 @@ fetch('https://randomuser.me/api/')
       height:50,
       width:50,
     })
+    
     $featuringContainer.append($loader);
+    const data=new FormData($form);
+    const data=await getData(`${data.get("name")}`)
+    
   })
   
   const actionList=await getData("https://yts.lt/api/v2/list_movies.json?genre=action")

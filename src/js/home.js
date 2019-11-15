@@ -1,4 +1,3 @@
-console.log('hola mundo!');
 const noCambia = "Leonidas";
 
 let cambia = "@LeonidasEsteban"
@@ -53,7 +52,7 @@ $.ajax('https://randomuser.me/api/', {
     console.log(error)
   }
 })
-
+// Aqui se ve como usar un api con javascript puro y jquery
 fetch('https://randomuser.me/api/')
   .then(function (response) {
     // console.log(response)
@@ -72,7 +71,7 @@ fetch('https://randomuser.me/api/')
     const responsive=await fetch(url)
     const data =await responsive.json()
     return data;
-    
+    // En esta parte es una funcion para usar fetch y poder traer las apis
   }
   
   const $featuringContainer=document.getElementById("featuring");
@@ -82,6 +81,7 @@ fetch('https://randomuser.me/api/')
   function setAttributes($element, attributes) {
     for (const attribute in attributes) {
       $element.setAttribute(attribute, attributes[attribute]);
+      // Esta es un funcion para agregar los atributos al carte cuando lo encontremos
     }
   }
 
@@ -113,10 +113,14 @@ fetch('https://randomuser.me/api/')
       width: 50,
     })
     $featuringContainer.append($loader);
-
+    // Esta funcion es para cuando busquemos algo en la barra de busqueda el codigo genere un cartel con la pelicula encontrada
     const data = new FormData($form);
-    const peli = await getData(`${BASE_API}list_movies.json?limit=1&query_term=${data.get('name')}`)
-    const HTMLString = featuringTemplate(peli.data.movies[0]);
+    const {
+      data:{
+        movies:pelis
+      }
+    } = await getData(`${BASE_API}list_movies.json?limit=1&query_term=${data.get('name')}`)
+    const HTMLString = featuringTemplate(pelis[0]);
     $featuringContainer.innerHTML = HTMLString;
   })
 
@@ -140,13 +144,13 @@ fetch('https://randomuser.me/api/')
           ${movie.title}
         </h4>
       </div>`
-    )
+    )//Esta funcion es para generar las imagenes que nos trae el api en el formato que queremos
   }
   function createTemplate(HTMLString){
     const html=document.implementation.createHTMLDocument();
     html.body.innerHTML=HTMLString;
     return html.body.children[0]
-  }
+  } // En esta funcion se va crear un elemento de HTML  para luego agregarle contenido :)
   function addEventClick($element){
     $element.addEventListener("click",()=>{
       showModal()

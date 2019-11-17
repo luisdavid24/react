@@ -124,9 +124,9 @@ fetch('https://randomuser.me/api/')
     $featuringContainer.innerHTML = HTMLString;
   })
 
-  const actionList = await getData(`${BASE_API}list_movies.json?genre=action`)
-  const dramaList = await getData(`${BASE_API}list_movies.json?genre=drama`)
-  const animationList = await getData(`${BASE_API}list_movies.json?genre=animation`)
+  const {data:{movies:actionList}} = await getData(`${BASE_API}list_movies.json?genre=action`)
+  const {data:{movies:dramaList}} = await getData(`${BASE_API}list_movies.json?genre=drama`)
+  const {data:{movies:animationList}} = await getData(`${BASE_API}list_movies.json?genre=animation`)
   console.log(actionList, dramaList, animationList)
 
   // const $home=$(".home");
@@ -169,9 +169,9 @@ fetch('https://randomuser.me/api/')
 
   }
   
-  renderMovieList(actionList.data.movies,$actionContainer,"action")
-  renderMovieList(dramaList.data.movies,$dramaContainer,"drama")
-  renderMovieList(animationList.data.movies,$animationContainer,"animation")
+  renderMovieList(actionList,$actionContainer,"action")
+  renderMovieList(dramaList,$dramaContainer,"drama")
+  renderMovieList(animationList,$animationContainer,"animation")
   
   
   const $modal=document.getElementById("modal");
@@ -181,12 +181,15 @@ fetch('https://randomuser.me/api/')
   const $modalTitle=$modal.querySelector("h1");
   const $modalImage=$modal.querySelector("img");
   const $modalDrescription=$modal.querySelector("p");
-
+  function findMovie(id,category){
+    actionList.find()
+  }
   function showModal($element){
     $overlay.classList.add("active");
     $modal.style.animation="modalIn .8s forwards"
     const id =$element.dataset.id
     const category=$element.dataset.category;
+    const data=findMovie()
   }
   $hideModal.addEventListener("click",hideModal);
   function hideModal(){

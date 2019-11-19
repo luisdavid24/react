@@ -80,6 +80,7 @@ fetch('https://randomuser.me/api/dsfdsfsd')
       return data;
     }
     // si no hay pelis aqui continua
+    throw new Error("No se encontro tu pelicula, hay un problema");
     
   }
   const $form = document.getElementById('form');

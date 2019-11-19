@@ -75,10 +75,12 @@ fetch('https://randomuser.me/api/dsfdsfsd')
   async function getData(url) {
     const response = await fetch(url);
     const data = await response.json()
-    // if (data.data.movie_count>0){
-    //   return data;
-    // }
-    return data;
+    if (data.data.movie_count>0){
+      // aqui termina
+      return data;
+    }
+    // si no hay pelis aqui continua
+    
   }
   const $form = document.getElementById('form');
   const $home = document.getElementById('home');
@@ -130,7 +132,7 @@ fetch('https://randomuser.me/api/dsfdsfsd')
       $featuringContainer.innerHTML = HTMLString;
 
     }catch(error){
-      alert(error);
+      alert(error.message);
       $loader.remove();
       $home.classList.remove("search-active");
     }

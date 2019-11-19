@@ -1,3 +1,4 @@
+console.log('hola mundo!');
 const noCambia = "Leonidas";
 
 let cambia = "@LeonidasEsteban"
@@ -43,7 +44,7 @@ Promise.race([
 
 
 
-$.ajax('https://randomuser.me/api/', {
+$.ajax('https://randomuser.me/api/sdfdsfdsfs', {
   method: 'GET',
   success: function(data) {
     console.log(data)
@@ -52,8 +53,8 @@ $.ajax('https://randomuser.me/api/', {
     console.log(error)
   }
 })
-// Aqui se ve como usar un api con javascript puro y jquery
-fetch('https://randomuser.me/api/')
+
+fetch('https://randomuser.me/api/dsfdsfsd')
   .then(function (response) {
     // console.log(response)
     return response.json()
@@ -65,26 +66,27 @@ fetch('https://randomuser.me/api/')
     console.log('algo falló')
   });
 
-  
-(async function load(){
-  async function getData(url){
-    const responsive=await fetch(url)
-    const data =await responsive.json()
+
+(async function load() {
+  // await
+  // action
+  // terror
+  // animation
+  async function getData(url) {
+    const response = await fetch(url);
+    const data = await response.json()
     return data;
-    // En esta parte es una funcion para usar fetch y poder traer las apis
   }
-  
-  const $featuringContainer=document.getElementById("featuring");
-  const $home=document.getElementById("home");
-  const $form=document.getElementById("form");
-  
+  const $form = document.getElementById('form');
+  const $home = document.getElementById('home');
+  const $featuringContainer = document.getElementById('featuring');
+
+
   function setAttributes($element, attributes) {
     for (const attribute in attributes) {
       $element.setAttribute(attribute, attributes[attribute]);
-      // Esta es un funcion para agregar los atributos al carte cuando lo encontremos
     }
   }
-
   const BASE_API = 'https://yts.am/api/v2/';
 
   function featuringTemplate(peli) {
@@ -113,30 +115,25 @@ fetch('https://randomuser.me/api/')
       width: 50,
     })
     $featuringContainer.append($loader);
-    // Esta funcion es para cuando busquemos algo en la barra de busqueda el codigo genere un cartel con la pelicula encontrada
+
     const data = new FormData($form);
     const {
-      data:{
-        movies:pelis
+      data: {
+        movies: pelis
       }
     } = await getData(`${BASE_API}list_movies.json?limit=1&query_term=${data.get('name')}`)
+
     const HTMLString = featuringTemplate(pelis[0]);
     $featuringContainer.innerHTML = HTMLString;
   })
 
-  const {data:{movies:actionList}} = await getData(`${BASE_API}list_movies.json?genre=action`)
-  const {data:{movies:dramaList}} = await getData(`${BASE_API}list_movies.json?genre=drama`)
-  const {data:{movies:animationList}} = await getData(`${BASE_API}list_movies.json?genre=animation`)
+  const { data: { movies: actionList} } = await getData(`${BASE_API}list_movies.json?genre=action`)
+  const { data: { movies: dramaList } } = await getData(`${BASE_API}list_movies.json?genre=drama`)
+  const { data: { movies: animationList } } = await getData(`${BASE_API}list_movies.json?genre=animation`)
   console.log(actionList, dramaList, animationList)
-
-  // const $home=$(".home");
-  const $actionContainer=document.querySelector("#action");
-  const $dramaContainer=document.getElementById("drama");
-  const $animationContainer=document.getElementById("animation");
-  
-  function videoItemTemplate(movie,category) {
+  function videoItemTemplate(movie, category) {
     return (
-      `<div class="primaryPlaylistItem" data-id="${movie.id}" data-category="${category}">
+      `<div class="primaryPlaylistItem" data-id="${movie.id}" data-category=${category}>
         <div class="primaryPlaylistItem-image">
           <img src="${movie.medium_cover_image}">
         </div>
@@ -144,57 +141,92 @@ fetch('https://randomuser.me/api/')
           ${movie.title}
         </h4>
       </div>`
-    )//Esta funcion es para generar las imagenes que nos trae el api en el formato que queremos
+    )
   }
-  function createTemplate(HTMLString){
-    const html=document.implementation.createHTMLDocument();
-    html.body.innerHTML=HTMLString;
-    return html.body.children[0]
-  } // En esta funcion se va crear un elemento de HTML  para luego agregarle contenido :)
-  function addEventClick($element){
-    $element.addEventListener("click",()=>{
+  function createTemplate(HTMLString) {
+    const html = document.implementation.createHTMLDocument();
+    html.body.innerHTML = HTMLString;
+    return html.body.children[0];
+  }
+  function addEventClick($element) {
+    $element.addEventListener('click', () => {
+      // alert('click')
       showModal($element)
     })
-    // $("div").on("click", function(){})
   }
-  function renderMovieList(list,$container,category){
+  function renderMovieList(list, $container, category) {
     // actionList.data.movies
     $container.children[0].remove();
-    list.forEach((movie)=>{
-      const HTMLString=videoItemTemplate(movie,category);
-      const movieElement=createTemplate(HTMLString);
+    list.forEach((movie) => {
+      const HTMLString = videoItemTemplate(movie, category);
+      const movieElement = createTemplate(HTMLString);
       $container.append(movieElement);
       addEventClick(movieElement);
     })
+  }
+  const $actionContainer = document.querySelector('#action');
+  renderMovieList(actionList, $actionContainer, 'action');
+
+  const $dramaContainer = document.getElementById('drama');
+  renderMovieList(dramaList, $dramaContainer, 'drama');
+
+  const $animationContainer = document.getElementById('animation');
+  renderMovieList(animationList, $animationContainer, 'animation');
+
+
+
+
+
+
+
+
+  // const $home = $('.home .list #item');
+  const $modal = document.getElementById('modal');
+  const $overlay = document.getElementById('overlay');
+  const $hideModal = document.getElementById('hide-modal');
+
+  const $modalTitle = $modal.querySelector('h1');
+  const $modalImage = $modal.querySelector('img');
+  const $modalDescription = $modal.querySelector('p');
+
+  function findById(list, id) {
+    return list.find(movie => movie.id === parseInt(id, 10))
+  }
+
+  function findMovie(id, category) {
+    switch (category) {
+      case 'action' : {
+        return findById(actionList, id)
+      }
+      case 'drama' : {
+        return findById(dramaList, id)
+      }
+      default: {
+        return findById(animationList, id)
+      }
+    }
+  }
+
+  function showModal($element) {
+    $overlay.classList.add('active');
+    $modal.style.animation = 'modalIn .8s forwards';
+    const id = $element.dataset.id;
+    const category = $element.dataset.category;
+    const data = findMovie(id, category);
+
+    $modalTitle.textContent = data.title;
+    $modalImage.setAttribute('src', data.medium_cover_image);
+    $modalDescription.textContent = data.description_full
+  }
+
+  $hideModal.addEventListener('click', hideModal);
+  function hideModal() {
+    $overlay.classList.remove('active');
+    $modal.style.animation = 'modalOut .8s forwards';
 
   }
-  
-  renderMovieList(actionList,$actionContainer,"action")
-  renderMovieList(dramaList,$dramaContainer,"drama")
-  renderMovieList(animationList,$animationContainer,"animation")
-  
-  
-  const $modal=document.getElementById("modal");
-  const $overlay=document.getElementById("overlay");
-  const $hideModal=document.getElementById("hide-modal");
-  
-  const $modalTitle=$modal.querySelector("h1");
-  const $modalImage=$modal.querySelector("img");
-  const $modalDrescription=$modal.querySelector("p");
-  function findMovie(id,category){
-    actionList.find()
-  }
-  function showModal($element){
-    $overlay.classList.add("active");
-    $modal.style.animation="modalIn .8s forwards"
-    const id =$element.dataset.id
-    const category=$element.dataset.category;
-    const data=findMovie()
-  }
-  $hideModal.addEventListener("click",hideModal);
-  function hideModal(){
-    $overlay.classList.remove("active");
-    $modal.style.animation="modalout .8s forwards"
-  }
+
+
+
 
 })()
